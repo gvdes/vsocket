@@ -2,7 +2,7 @@
 /**
  * npm run dev
  */
- const allowedSites = ['http://192.168.1.86:8128','http://localhost:8128','http://vizappdev.grupovizcarra.net:7007'];
+ const allowedSites = ['http://192.168.1.86:8128','http://localhost:8128','http://vizappdev.grupovizcarra.net:7007','http://vizappdev.grupovizcarra.net:7001'];
  console.log("Reiniciado...");
  var app = require('express')();
  var http = require('http').createServer(app);

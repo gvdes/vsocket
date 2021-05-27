@@ -2,13 +2,13 @@
  * npm run dev
  */
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.1.247:24700', 'http://localhost:24700' ];
+// const allowedSites = [ 'http://192.168.1.197:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://vizappdev.grupovizcarra.net:7007' ];
+const allowedSites = [ 'http://vizappdev.grupovizcarra.net:7007' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
-const allowedSites = [ 'http://vizappdev.grupovizcarra.net:2908', 'http://192.168.1.222:4001' ];
+// const allowedSites = [ 'http://vizappdev.grupovizcarra.net:2908', 'http://192.168.1.222:4001' ];
 
 console.log("Reiniciado...");
 var app = require('express')();

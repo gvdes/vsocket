@@ -2,10 +2,10 @@
  * npm run dev
  */
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.1.197:24700', 'http://localhost:24700' ];
+// const allowedSites = [ 'http://192.168.1.228:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://vizappdev.grupovizcarra.net:7007' ];
+const allowedSites = [ 'http://192.168.10.15:7007' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://vizappdev.grupovizcarra.net:2908', 'http://192.168.1.222:4001' ];
@@ -21,12 +21,11 @@ const counters = io.of('/counters');
 const preventa = io.of('/preventa');
 const resurtidos = io.of('/resurtidos');
 
+let time = (time)=>{ return `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`; };
+
 io.on('connection',con=>{ console.log("❰❰❰❰❰ Nueva conexion al socket ❯❯❯❯❯"); });
 
 counters.on('connection',counter=>{
-
-    let time = (time)=>{ return `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`; };
-
     console.log("\n\n\n\n\n=============================================");
     console.log(`[${time(new Date())}]: ❰❰❰❰❰ Nueva conexion a INVENTARIOS ❯❯❯❯❯`);
 
@@ -82,7 +81,7 @@ counters.on('connection',counter=>{
 
 preventa.on('connection',pv=>{
     console.log("\n\n\n\n\n=============================================");
-    console.log("❰❰❰❰❰ Nueva conexion PREVENTA ❯❯❯❯❯");
+    console.log(`[${time(new Date())}]: ❰❰❰❰❰ Nueva conexion PREVENTA ❯❯❯❯❯`);
 
     pv.on('joinat',gdata=>{
         // console.log(gdata);
@@ -94,8 +93,8 @@ preventa.on('connection',pv=>{
         
         pv.join(room);
         pv.join(roomdash);
-        console.log(`Se unio a la preventa: ${room}`);
-        console.log(`Uniendo al dashboard de preventa: ${room}`);
+        console.log(`[${time(new Date())}]: Se unio a la preventa: ${room}`);
+        console.log(`[${time(new Date())}]: Uniendo al dashboard de preventa: ${room}`);
         console.log("\n=============================================");
 
         // preventa.on(room).emit( 'joinprev', {user:user,notify:`${msg} se ha unido al room ${room}` } );
@@ -189,3 +188,4 @@ resurtidos.on('connection',dashboard=>{
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });
+

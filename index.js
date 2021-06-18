@@ -5,7 +5,7 @@
 // const allowedSites = [ 'http://192.168.1.228:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007' ];
+const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://vizappdev.grupovizcarra.net:2908', 'http://192.168.1.222:4001' ];

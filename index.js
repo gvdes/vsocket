@@ -2,10 +2,10 @@
  * npm run dev
  */
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.1.228:24700', 'http://localhost:24700' ];
+const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://vizappdev.grupovizcarra.net:2908', 'http://192.168.1.222:4001' ];
@@ -85,20 +85,13 @@ preventa.on('connection',pv=>{
 
     pv.on('joinat',gdata=>{
         // console.log(gdata);
-        let room = `PRV-${gdata.from.workpoint.alias}`;
-        let roomdash = `DASHPRV-${gdata.room}`;
-        
-        let user = gdata.user;
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
-        
-        pv.join(room);
-        pv.join(roomdash);
-        console.log(`[${time(new Date())}]: Se unio a la preventa: ${room}`);
-        console.log(`[${time(new Date())}]: Uniendo al dashboard de preventa: ${room}`);
+        let prevGlobalRoom = `PRV-${gdata.workpoint.alias}`;//canal global de preventa
+
+        pv.join(prevGlobalRoom);
+        console.log(`[${time(new Date())}]: ${gdata.me.nick} de ${gdata.workpoint.alias} se unio a ${prevGlobalRoom}`);
         console.log("\n=============================================");
 
-        // preventa.on(room).emit( 'joinprev', {user:user,notify:`${msg} se ha unido al room ${room}` } );
-        // preventa.on(roomdash).emit( 'joinprevwrh', {user:user,notify:`${msg} se ha unido al room ${roomdash}` } );
+        preventa.in(prevGlobalRoom).emit( 'joined', {from:gdata} );
     });
 
     pv.on('order_creating', gdata =>{

@@ -8,7 +8,7 @@
 // const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
-const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540/' ];
+const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
 
 console.log("Reiniciado...");
 var app = require('express')();

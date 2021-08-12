@@ -150,36 +150,6 @@ preventa.on('connection', socket =>{
         console.log("\n\n===========");
     });
 
-    // socket.on('joinrooms', gdata => {
-    //     console.log(socket.id);
-    //     let branch = gdata.workpoint.alias;
-    //     let rol = gdata.profile.me._rol;
-
-    //     //ROOMS disponibles
-    //     let avlrooms = [
-    //         { name:'main', room:`PRV_${branch}`, auths:[1,2,3,4,5,6,7] },
-    //         { name:'_sales', room:`PRV_${branch}_sales`, auths:[1,2,3,4] },
-    //         { name:'_checkin', room:`PRV_${branch}_checkin`, auths:[1,2,3,4,6,7] },
-    //         { name:'_warehouse', room:`PRV_${branch}_warehouse`, auths:[1,2,3,4,5,6,7] },
-    //         { name:'_validation', room:`PRV_${branch}_validation`, auths:[1,2,3,5,6,7] },
-    //         { name:'_cashdesk', room:`PRV_${branch}_cashdesk`, auths:[1,2,3,5] },
-    //         { name:'_admin', room:`PRV_${branch}_admin`, auths:[1,2,3] },
-    //     ];
-
-    //     avlrooms.forEach( room => {
-    //         if(room.auths.findIndex( auth => auth==rol )>=0){
-    //             socket.join(room.room);//une al canal
-    //             console.log(`${gdata.profile.me.nick} se unio a ${room.room}`);
-    //             socket.emit('joinedat', {
-    //                 profile:gdata.profile, workpoint:gdata.workpoint, room:room.room
-    //             });//emite al mismo socket a los canales a los que se unio
-    //             socket.in(room.room).emit('newjoin',{
-    //                 profile:gdata.profile, workpoint:gdata.workpoint, room:room.room
-    //             });
-    //         }
-    //     });
-    // });
-
     socket.on('order_created', data => {
         let order = data.order.id;
         let by = data.order.created_by.nick;
@@ -201,7 +171,7 @@ preventa.on('connection', socket =>{
         switch (newstate.id) {
             case 3: room = `PRV_${branch}_checkin`; break;
 
-            case 4:
+            case 4: case 5:
                 /**
                  * 
                  * notificar al room _warehouse de un nuevo pedido (agregarlo)

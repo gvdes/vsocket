@@ -1,10 +1,10 @@
 const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
 
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
+const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -116,8 +116,9 @@ counters.on('connection',counter=>{
 });
 
 preventa.on('connection', socket =>{
-    console.log("\n\n\n\n\n=============================================");
-    console.log(`[${time(new Date())}]: ❰❰❰❰❰ Nueva conexion PREVENTA ❯❯❯❯❯`);
+    console.log("\n\n\n\n\n=============================================================");
+    console.log(`==  [${time(new Date())}]: ❯❯❯❯❯ Nueva conexion a PREVENTA  ==`);
+    console.log("=============================================================\n");
     let clients = [];    
     
     // socket.emit('socketid',socket.id);
@@ -131,9 +132,7 @@ preventa.on('connection', socket =>{
         socket.emit('joinedat', { profile, workpoint, room:_room });
         socket.to(_room).emit('newjoin', { profile, workpoint, room:_room });
 
-        console.log("\n\n\n===========");
-        console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${nick} de ${branch} se unio a ${_room}`);
-        console.log("\n\===========");
+        console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${nick} de ${branch} se unio a ${_room}\n`);
     });
 
     socket.on('unjoin', ({ profile, workpoint, room }) => {
@@ -145,9 +144,7 @@ preventa.on('connection', socket =>{
         socket.to(_room).emit('socketunjoined', { profile, workpoint, room:_room });
         socket.leave(_room);
 
-        console.log("\n\n\n===========");
-        console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${nick} de ${branch} salio de ${_room}`);
-        console.log("\n\n===========");
+        console.log(`[${time(new Date())}]: ❰❰❰❰❰ ${nick} de ${branch} salio de ${_room}\n`);
     });
 
     socket.on('order_created', data => {
@@ -155,21 +152,30 @@ preventa.on('connection', socket =>{
         let by = data.order.created_by.nick;
         let branch = data.order.from.alias;
 
-        console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${by} de ${branch} creo el pedido ${order}!!`);
+        console.log(`[${time(new Date())}]: ❯ ${by} de ${branch} creo el pedido ${order}\n`);
         socket.in(`PRV_${branch}_admin`).emit('order_created', data);
     });
 
     socket.on('order_changestate', data => {
-        console.log(`[${time(new Date())}]: ❯❯❯❯❯ Una orden ha cambiado!!`);
-        console.log(data);
+        // console.log(data);
         let order = data.order.id;
         let newstate = data.newstate;
         let branch = data.order.from.alias;
 
-        console.log(branch);
+        console.log(`[${time(new Date())}]: ❯ La orden ${order} ha cambiado a "${newstate.name}" -> (${newstate.id})\n`);
+
+        // console.log(branch);
 
         switch (newstate.id) {
-            case 3: room = `PRV_${branch}_checkin`; break;
+            case 3:
+                /**
+                 * 
+                 * notificar al room _checkin de un nuevo pedido (agregarlo)
+                 * notificar a _admin de que una orden cambio de status
+                 * 
+                 */
+                    socket.to(`PRV_${branch}_admin`).to(`PRV_${branch}_checkin`).emit('order_changestate', data);    
+                break;
 
             case 4: case 5:
                 /**
@@ -180,16 +186,13 @@ preventa.on('connection', socket =>{
                  * 
                  */
 
-                    socket.to(`PRV_${branch}_admin`).to(`PRV_${branch}_warehouse`).emit('order_changestate', data);
+                    socket.to(`PRV_${branch}_admin`).to(`PRV_${branch}_warehouse`).to(`PRV_${branch}_checkin`).emit('order_changestate', data);
                 break;
         
             default:
                     console.log("La orden cambio a un status no registrado!!");
                 break;
         }
-
-        // console.log(`La orden ${order} de ${branch} ha cambiado a ${state.name}, se notificara a ${room} `);
-        // socket.in(room).emit('order_changestate',{ data });
     });
 
     socket.on('disconnect', data =>{

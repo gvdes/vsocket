@@ -1,10 +1,8 @@
-const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
-
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
+// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -171,6 +169,7 @@ preventa.on('connection', socket =>{
                 /**
                  * 
                  * notificar al room _checkin de un nuevo pedido (agregarlo)
+                 * removerlo del room CHECKIN
                  * notificar a _admin de que una orden cambio de status
                  * 
                  */

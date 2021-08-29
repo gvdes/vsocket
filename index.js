@@ -155,7 +155,7 @@ preventa.on('connection', socket =>{
     });
 
     socket.on('order_changestate', data => {
-        // console.log(data);
+        console.log(data);
         let order = data.order.id;
         let newstate = data.newstate;
         let branch = data.order.from.alias;

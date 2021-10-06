@@ -1,8 +1,10 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700' ];
+const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'https://admin.socket.io/#/' ];
+const fs = require('fs');
+// const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -11,52 +13,23 @@ console.log("Reiniciado...");
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http,{ cors:{ origin:allowedSites } });
+// var io = require('socket.io')(http,{ cors:{ origin:allowedSites, credentials: false } });
+// instrument(io, { auth: false });
 
 http.listen(7171, () => { console.log('listening on *:7171'); });
+// fs.writeFileSync('error_log.json','Hola');
 
 const counters = io.of('/counters');
 const preventa = io.of('/preventa');
 const resurtidos = io.of('/resurtidos');
 
-let time = (time)=>{ return `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`; };
+let time = time => `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
 io.on('connection', socket =>{
     let clients = [];
-    console.log("❰❰❰❰❰ Nueva conexion al socket ❯❯❯❯❯");
-    console.log(socket.id);
-    
-    // socket.emit('socketid',{socketid:socket.id});
-
-    // socket.on('session_start', ({profile,socketid,from}) => {
-    //     console.log(`Validando conexion para ${socketid} (${socket.id})...`);
-
-    //     socket.profile = profile.me;
-    //     socket.brorigin = from;
-
-    //     for( let [id,socket] of io.of("/").sockets){ console.log(`${socket.id} || ${id} || ${socketid}`); }
-    // });
-
-    // socket.on('list_sockets', () => {
-    //     let sockets = [];
-    //     for( let [id,socket] of io.of("/").sockets){
-    //         console.log(socket.user);
-    //         sockets.push({
-    //             id,
-    //             socket
-    //         });
-    //     }
-    //     socket.emit('list_sockets', sockets);
-    // });
-
-    // socket.on('disconnect', () => {
-    //     console.log("\n\n\n\n\n=============================================\n\n\n\n\n");
-    //     console.log(`${socket.id} abandono el canal`);
-    //     console.log("\n\n\n\n\n=============================================");
-    // });
-
-    // socket.on('on_preventa', data =>{
-    //     console.log(`[${time(new Date())} GBSKT]: usuario unido a preventa.`);
-    // });
+    console.log("\n\n\n ===================================================================================== ");
+    console.log(` === ❰❰❰❰❰ [${time(new Date())}] ${socket.id} Se unio al Socket GLOBAL ❯❯❯❯❯ ===`);
+    console.log(" ===================================================================================== \n\n\n");
 });
 
 counters.on('connection',counter=>{
@@ -113,89 +86,152 @@ counters.on('connection',counter=>{
     });
 });
 
+// const socketsin = (nmspc,room) => { return io.of("/"+nmspc).in(room).allSockets(); }
+
 preventa.on('connection', socket =>{
-    console.log("\n\n\n\n\n=============================================================");
-    console.log(`==  [${time(new Date())}]: ❯❯❯❯❯ Nueva conexion a PREVENTA  ==`);
-    console.log("=============================================================\n");
-    let clients = [];    
+    console.log(" ================================================================================= ");
+    console.log(` == [${time(new Date())}]: ❯❯❯❯❯ Nueva conexion a PREVENTA (${socket.id}) ==`);
+    console.log(" ================================================================================= \n");
     
-    // socket.emit('socketid',socket.id);
+    socket.emit('socketid',socket.id);
 
     socket.on('join', ({ profile, workpoint, room }) => {
-        let nick = profile.me.nick;
-        let branch = workpoint.alias;
-        let _room = `PRV_${workpoint.alias}_${room}`;
 
-        socket.join(_room);
-        socket.emit('joinedat', { profile, workpoint, room:_room });
-        socket.to(_room).emit('newjoin', { profile, workpoint, room:_room });
+        try {
+            let user = profile.me.nick;// nombre dle usuairo a conectar
+            let branch = workpoint.alias; // nombre de sucursal de conexion de origen
+            let _room = `PRV_${branch}_${room}`;// nombre del room a crear
+            let _admins = `PRV_${branch}_admins`;// nombre del room a crear
 
-        console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${nick} de ${branch} se unio a ${_room}\n`);
+            socket.join(_room);
+            console.log(`[${time(new Date())}]: ❯❯❯❯❯ ${user} de ${branch} se unio a ${_room}\n`);
+            socket.emit('joinedat', { profile, workpoint, room:_room });
+
+            socket.in(_admins).in(_room).emit('newjoin', { profile, workpoint, room:_room });
+        } catch (error) {
+            let newerror = { error, time:time(new Date()), msg:'No se pudo leer la propiedad solicitada' };
+            let msgsave = JSON.stringify(newerror);
+            // fs.writeFileSync('error_log.json',msgsave);
+        }
     });
 
     socket.on('unjoin', ({ profile, workpoint, room }) => {
-        let nick = profile.me.nick;
-        let branch = workpoint.alias;
-        let _room = `PRV_${workpoint.alias}_${room}`;
 
-        socket.emit('unjoined', { profile, workpoint, room:_room });
-        socket.to(_room).emit('socketunjoined', { profile, workpoint, room:_room });
-        socket.leave(_room);
+        try {
+            let nick = profile.me.nick;
+            let branch = workpoint.alias;
+            let _room = `PRV_${workpoint.alias}_${room}`;
 
-        console.log(`[${time(new Date())}]: ❰❰❰❰❰ ${nick} de ${branch} salio de ${_room}\n`);
+            socket.emit('unjoined', { profile, workpoint, room:_room });
+            socket.to(_room).emit('socketunjoined', { profile, workpoint, room:_room });
+            socket.leave(_room);
+
+            console.log(`[${time(new Date())}]: ❰❰❰❰❰ ${nick} de ${branch} salio de ${_room}\n`);
+
+        } catch (error) {
+            socket.emit('unjoin_crash',{error});
+
+            let newerror = { error, time:time(new Date()), msg:'No se pudo leer la propiedad solicitada' };
+            let msgsave = JSON.stringify(newerror);
+            // fs.writeFileSync('error_log.json',msgsave);
+        }
+
     });
 
-    socket.on('order_created', data => {
+    socket.on('order_add', data => {
         let order = data.order.id;
         let by = data.order.created_by.nick;
         let branch = data.order.from.alias;
 
-        console.log(`[${time(new Date())}]: ❯ ${by} de ${branch} creo el pedido ${order}\n`);
-        socket.in(`PRV_${branch}_admin`).emit('order_created', data);
+        let _admins = `PRV_${branch}_admins`;
+        let _sales = `PRV_${branch}_sales`;
+
+        console.log(`[${time(new Date())}]: --❯ ${by} de ${branch} creo el pedido ${order} (${data.order.name})\n`);
+        socket.to(_admins).to(_sales).emit('order_add', data);
     });
 
-    socket.on('order_changestate', data => {
-        console.log(data);
+    socket.on('order_update', data => {
+        // console.log("Una orden fue actualizada");
+        // console.log(data);
         let order = data.order.id;
         let newstate = data.newstate;
         let branch = data.order.from.alias;
 
-        console.log(`[${time(new Date())}]: ❯ La orden ${order} ha cambiado a "${newstate.name}" -> (${newstate.id})\n`);
+        let _admins = `PRV_${branch}_admins`;
+        let _sales = `PRV_${branch}_sales`;
+        let _checkin = `PRV_${branch}_checkin`;
+        let _supply = `PRV_${branch}_supply`;
+        let _checkout = `PRV_${branch}_checkout`;
+
+        console.log(`[${time(new Date())}]: ==❯ La orden ${order} (${branch}) ha cambiado a "${newstate.name}" -> (${newstate.id})\n`);
 
         // console.log(branch);
+        
+        /**
+         * Ya que tanto admins como sales reciben todos los pedidos que se crean, 
+         * siempre se les notificara de un cambio de status...
+         */
+        socket.to(_admins).to(_sales).emit('order_update', data);
+
+        /**
+         * adicional a ello, algunas salas tambien deben de recibir la notificacion 
+         * para crear o modificar los pedidos en preventa dependiendo del :
+         */
 
         switch (newstate.id) {
             case 3:
                 /**
-                 * 
+                 * El pedido paso a CHECKIN
                  * notificar al room _checkin de un nuevo pedido (agregarlo)
-                 * removerlo del room CHECKIN
-                 * notificar a _admin de que una orden cambio de status
-                 * 
                  */
-                    socket.to(`PRV_${branch}_admin`).to(`PRV_${branch}_checkin`).emit('order_changestate', data);    
-                break;
+                socket.to(_checkin).emit('order_add', data);
+            break;
 
-            case 4: case 5:
+            case 4:
                 /**
-                 * 
-                 * notificar al room _warehouse de un nuevo pedido (agregarlo)
-                 * removerlo del room CHECKIN
-                 * notificar a _admin de que una orden cambio de status
-                 * 
+                 * El pedido paso a POR SURTIR
+                 * notificar al room supply de un nuevo pedido (agregarlo)
+                 * notificar al room checkin de un cambio de status
                  */
+                socket.to(_supply).emit('order_add', data);
+                socket.to(_checkin).emit('order_update', data);
+            break;
+            
+            case 5: case 7:
+                socket.to(_supply).to(_checkout).emit('order_aou', data);
+            break;
 
-                    socket.to(`PRV_${branch}_admin`).to(`PRV_${branch}_warehouse`).to(`PRV_${branch}_checkin`).emit('order_changestate', data);
-                break;
+            // case 7:
+            //     socket.to(_supply).to(_checkout).emit('order_aou', data);
+            // break;
         
             default:
-                    console.log("La orden cambio a un status no registrado!!");
-                break;
+                console.log("La orden cambio a un status no registrado!!");
+            break;
         }
     });
 
+    socket.on('module_update', ({profile,workpoint,state}) => {
+        let by = profile.me.nick;
+        let branch = workpoint.alias; 
+        let _msgstate = state.state ? 'encendio':'apago';
+        let _room = `PRV_${workpoint.alias}_cfg`;
+
+        console.log(`[${time(new Date())}]: --❯ ${by} de ${branch} ${_msgstate} el modulo ${state.name}.\n`);
+        socket.to(_room).emit('module_update',{by,_msgstate,state});
+    });
+
+    socket.on('cash_update', ({profile,workpoint,cash,newstate}) => {
+        let by = profile.me.nick;
+        let branch = workpoint.alias; 
+        let _msgstate = newstate.id==1 ? `${by} encendio la ${cash.name}`:`${by} apago la ${cash.name}`;
+        let _room = `PRV_${branch}_cfg`;
+
+        console.log(`[${time(new Date())}]: --❯ ${_msgstate}.\n`);
+        socket.to(_room).emit('cash_update',{by,cash,newstate});
+    });
+
     socket.on('disconnect', data =>{
-        
         console.log("\nun usuario abandono el CANAL PREVENTA\n");
     });
 });
@@ -260,4 +296,3 @@ resurtidos.on('connection',dashboard=>{
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });
-

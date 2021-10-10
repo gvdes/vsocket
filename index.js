@@ -1,10 +1,10 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'https://admin.socket.io/#/' ];
-const fs = require('fs');
+// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:7007' ];
+// const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -162,6 +162,7 @@ preventa.on('connection', socket =>{
         let _checkin = `PRV_${branch}_checkin`;
         let _supply = `PRV_${branch}_supply`;
         let _checkout = `PRV_${branch}_checkout`;
+        let _cfg = `PRV_${branch}_cfg`;
 
         console.log(`[${time(new Date())}]: ==❯ La orden ${order} (${branch}) ha cambiado a "${newstate.name}" -> (${newstate.id})\n`);
 
@@ -201,9 +202,9 @@ preventa.on('connection', socket =>{
                 socket.to(_supply).to(_checkout).emit('order_aou', data);
             break;
 
-            // case 7:
-            //     socket.to(_supply).to(_checkout).emit('order_aou', data);
-            // break;
+            case 100:
+                socket.to(_cfg).emit('order_update', data);
+            break;
         
             default:
                 console.log("La orden cambio a un status no registrado!!");
@@ -241,11 +242,12 @@ resurtidos.on('connection',dashboard=>{
     console.log("❰❰❰❰❰ Nueva conexion a RESURTIDOS ❯❯❯❯❯");
 
     dashboard.on('joinat',gdata=>{
+        console.log(gdata);
         //let roomdash = `DASHREQ-${gdata.room}`;// nombre del room a unirse
         let roomdash = `DASHBOARDSREQS`;// nombre del room a unirse
         console.log("uniendose a room "+roomdash);// 
-        let user = gdata.user;
-        let from = gdata.from;
+        let user = gdata.profile;
+        let from = gdata.workpoint;
         dashboard.join(roomdash);
         let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}] se unio a resurtidos y al room ${roomdash}`;
         console.log(msg);

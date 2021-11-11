@@ -1,5 +1,5 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:8008', 'http://192.168.10.23:24800'];
+const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:8008', 'http://192.168.10.23:24800'];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
@@ -10,7 +10,7 @@
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
 
 // ❰❰❰❰❰ P U E B L A ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.90.253:1619' ];
+// const allowedSites = [ 'http://192.168.90.253:1619/vizapp' ];
 
 console.log("Reiniciado...");
 var app = require('express')();

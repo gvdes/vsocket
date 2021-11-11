@@ -1,13 +1,16 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:7007' ];
+// const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:8008', 'http://192.168.10.23:24800'];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
+
+// ❰❰❰❰❰ P U E B L A ❱❱❱❱❱
+const allowedSites = [ 'http://192.168.90.253:1619' ];
 
 console.log("Reiniciado...");
 var app = require('express')();
@@ -22,6 +25,7 @@ http.listen(7171, () => { console.log('listening on *:7171'); });
 const counters = io.of('/counters');
 const preventa = io.of('/preventa');
 const resurtidos = io.of('/resurtidos');
+// const resurtido = io.of('/resurtido');
 
 let time = time => `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
@@ -236,6 +240,18 @@ preventa.on('connection', socket =>{
         console.log("\nun usuario abandono el CANAL PREVENTA\n");
     });
 });
+
+// resurtidos.on('connection',socket=>{
+//     console.log("\n\n\n\n\n=============================================");
+//     console.log("❰❰❰❰❰ Nueva conexion a RESURTIDOS ❯❯❯❯❯");
+
+//     /**
+//      * Canal global para WORKPOINTS
+//      * Canal entre CEDIS
+//      */
+
+//     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
+// });
 
 resurtidos.on('connection',dashboard=>{
     console.log("\n\n\n\n\n=============================================");

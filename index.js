@@ -1,5 +1,5 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.33:24700', 'http://localhost:24700', 'http://192.168.10.12:8008', 'http://192.168.10.23:24800'];
+const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008', 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
@@ -19,7 +19,7 @@ var io = require('socket.io')(http,{ cors:{ origin:allowedSites } });
 // var io = require('socket.io')(http,{ cors:{ origin:allowedSites, credentials: false } });
 // instrument(io, { auth: false });
 
-http.listen(7171, () => { console.log('listening on *:7171'); });
+http.listen(7173, () => { console.log('listening on *:7173'); });
 // fs.writeFileSync('error_log.json','Hola');
 
 const counters = io.of('/counters');

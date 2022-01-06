@@ -1,10 +1,10 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008', 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
+const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008' ];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4546' ];
+const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -19,7 +19,7 @@ var io = require('socket.io')(http,{ cors:{ origin:allowedSites } });
 // var io = require('socket.io')(http,{ cors:{ origin:allowedSites, credentials: false } });
 // instrument(io, { auth: false });
 
-http.listen(7173, () => { console.log('listening on *:7173'); });
+http.listen(7171, () => { console.log('listening on *:7171'); });
 // fs.writeFileSync('error_log.json','Hola');
 
 const counters = io.of('/counters');

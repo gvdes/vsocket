@@ -1,5 +1,5 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008' ];
+// const allowedSites = ['http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008'];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 

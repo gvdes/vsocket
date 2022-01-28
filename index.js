@@ -4,7 +4,7 @@
 // const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
+const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100','http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];

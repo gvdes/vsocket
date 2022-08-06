@@ -1,10 +1,10 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-// const allowedSites = ['http://192.168.12.234:2100', 'http://localhost:2100', 'http://192.168.10.12:8008'];
+const allowedSites = ['http://localhost:2100', 'http://192.168.12.129:2100'];
 // const fs = require('fs');
 // const { instrument } = require("@socket.io/admin-ui");
 
 // ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100','http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
+// const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100','http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
 
 // ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
 // const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
@@ -96,7 +96,7 @@ preventa.on('connection', socket =>{
     console.log(" ================================================================================= ");
     console.log(` == [${time(new Date())}]: ❯❯❯❯❯ Nueva conexion a PREVENTA (${socket.id}) ==`);
     console.log(" ================================================================================= \n");
-    
+
     socket.emit('socketid',socket.id);
 
     socket.on('join', ({ profile, workpoint, room }) => {
@@ -171,15 +171,15 @@ preventa.on('connection', socket =>{
         console.log(`[${time(new Date())}]: ==❯ La orden ${order} (${branch}) ha cambiado a "${newstate.name}" -> (${newstate.id})\n`);
 
         // console.log(branch);
-        
+
         /**
-         * Ya que tanto admins como sales reciben todos los pedidos que se crean, 
+         * Ya que tanto admins como sales reciben todos los pedidos que se crean,
          * siempre se les notificara de un cambio de status...
          */
         socket.to(_admins).to(_sales).emit('order_update', data);
 
         /**
-         * adicional a ello, algunas salas tambien deben de recibir la notificacion 
+         * adicional a ello, algunas salas tambien deben de recibir la notificacion
          * para crear o modificar los pedidos en preventa dependiendo del :
          */
 
@@ -201,7 +201,7 @@ preventa.on('connection', socket =>{
                 socket.to(_supply).emit('order_add', data);
                 socket.to(_checkin).emit('order_update', data);
             break;
-            
+
             case 5: case 7:
                 socket.to(_supply).to(_checkout).emit('order_aou', data);
             break;
@@ -209,7 +209,7 @@ preventa.on('connection', socket =>{
             case 100:
                 socket.to(_cfg).emit('order_update', data);
             break;
-        
+
             default:
                 console.log("La orden cambio a un status no registrado!!");
             break;
@@ -218,7 +218,7 @@ preventa.on('connection', socket =>{
 
     socket.on('module_update', ({profile,workpoint,state}) => {
         let by = profile.me.nick;
-        let branch = workpoint.alias; 
+        let branch = workpoint.alias;
         let _msgstate = state.state ? 'encendio':'apago';
         let _room = `PRV_${workpoint.alias}_cfg`;
 
@@ -228,7 +228,7 @@ preventa.on('connection', socket =>{
 
     socket.on('cash_update', ({profile,workpoint,cash,newstate}) => {
         let by = profile.me.nick;
-        let branch = workpoint.alias; 
+        let branch = workpoint.alias;
         let _msgstate = newstate.id==1 ? `${by} encendio la ${cash.name}`:`${by} apago la ${cash.name}`;
         let _room = `PRV_${branch}_cfg`;
 
@@ -261,7 +261,7 @@ resurtidos.on('connection',dashboard=>{
         console.log(gdata);
         //let roomdash = `DASHREQ-${gdata.room}`;// nombre del room a unirse
         let roomdash = `DASHBOARDSREQS`;// nombre del room a unirse
-        console.log("uniendose a room "+roomdash);// 
+        console.log("uniendose a room "+roomdash);//
         let user = gdata.profile;
         let from = gdata.workpoint;
         dashboard.join(roomdash);
@@ -302,7 +302,7 @@ resurtidos.on('connection',dashboard=>{
         console.log("actualizando pedido...");
         let roomdash = `DASHBOARDSREQS`;
         // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
-        
+
         resurtidos.to(roomdash).emit('order_changestate',gdata);
     });
 

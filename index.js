@@ -1,16 +1,5 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
-const allowedSites = ['http://localhost:2100', 'http://192.168.12.183:2100', 'http://192.168.10.101:7007', 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546'];
-// const fs = require('fs');
-// const { instrument } = require("@socket.io/admin-ui");
-
-// ❰❰❰❰❰ P R O D U C C I O N ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.12.234:2100', 'http://localhost:2100','http://192.168.10.15:7007','http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546' ];
-
-// ❰❰❰❰❰ P R U E B A S ❱❱❱❱❱
-// const allowedSites = [ 'http://mx100-cedis-vtbbdhgjzk.dynamic-m.com:4540' ];
-
-// ❰❰❰❰❰ P U E B L A ❱❱❱❱❱
-// const allowedSites = [ 'http://192.168.90.253:1619/vizapp' ];
+const allowedSites = ['http://localhost:2100','http://192.168.10.15:7007','http://192.168.12.183:2100', 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546'];
 
 console.log("Reiniciado...");
 var app = require('express')();

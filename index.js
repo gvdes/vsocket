@@ -8,7 +8,7 @@ var io = require('socket.io')(http,{ cors:{ origin:allowedSites } });
 // var io = require('socket.io')(http,{ cors:{ origin:allowedSites, credentials: false } });
 // instrument(io, { auth: false });
 
-http.listen(7171, () => { console.log('listening on *:7171'); });
+http.listen(4444, () => { console.log('listening on *:4444'); });
 // fs.writeFileSync('error_log.json','Hola');
 
 const counters = io.of('/counters');

@@ -14,14 +14,14 @@ http.listen(7171, () => { console.log('listening on *:7171'); });
 const counters = io.of('/counters');
 const preventa = io.of('/preventa');
 const resurtidos = io.of('/resurtidos');
+const clients = [];
 // const resurtido = io.of('/resurtido');
 
 let time = time => `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
 io.on('connection', socket =>{
-    let clients = [];
     console.log("\n\n\n ===================================================================================== ");
-    console.log(` === ❰❰❰❰❰ [${time(new Date())}] ${socket.id} Se unio al Socket GLOBAL ❯❯❯❯❯ ===`);
+    console.log(` === ❰❰❰❰❰ [${time(new Date())}] ${socket.id} has been connected in GSOCKET!!! ❯❯❯❯❯ ===`);
     console.log(" ===================================================================================== \n\n\n");
 });
 

@@ -150,7 +150,8 @@ preventa.on('connection', socket =>{
             console.log(`[${time(new Date())}]: --❯ ${by} de ${branch} creo el pedido ${order} (${data.order.name})\n`);
             socket.to(_admins).to(_sales).emit('order_add', data);
         } catch (error) {
-            console.error(error);
+            let newerror = { error, time:time(new Date()), msg:'No se pudo leer la propiedad solicitada' };
+            let msgsave = JSON.stringify(newerror);
         }
     });
 

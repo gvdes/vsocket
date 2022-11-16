@@ -139,15 +139,19 @@ preventa.on('connection', socket =>{
     });
 
     socket.on('order_add', data => {
-        let order = data.order.id;
-        let by = data.order.created_by.nick;
-        let branch = data.order.from.alias;
-
-        let _admins = `PRV_${branch}_admins`;
-        let _sales = `PRV_${branch}_sales`;
-
-        console.log(`[${time(new Date())}]: --❯ ${by} de ${branch} creo el pedido ${order} (${data.order.name})\n`);
-        socket.to(_admins).to(_sales).emit('order_add', data);
+        try {
+            let order = data.order.id;
+            let by = data.order.created_by.nick;
+            let branch = data.order.from.alias;
+    
+            let _admins = `PRV_${branch}_admins`;
+            let _sales = `PRV_${branch}_sales`;
+    
+            console.log(`[${time(new Date())}]: --❯ ${by} de ${branch} creo el pedido ${order} (${data.order.name})\n`);
+            socket.to(_admins).to(_sales).emit('order_add', data);
+        } catch (error) {
+            console.error(error);
+        }
     });
 
     socket.on('order_update', data => {

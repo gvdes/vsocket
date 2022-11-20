@@ -12,10 +12,11 @@ console.log("Reiniciado...");
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http,{ cors:{ origin:allowedSites } });
+const port = 4141;
 // var io = require('socket.io')(http,{ cors:{ origin:allowedSites, credentials: false } });
 // instrument(io, { auth: false });
 
-http.listen(4444, () => { console.log('listening on *:4444'); });
+http.listen(port, () => { console.log(`Socket running on ${port}`); });
 // fs.writeFileSync('error_log.json','Hola');
 
 const counters = io.of('/counters');

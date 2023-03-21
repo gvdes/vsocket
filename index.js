@@ -316,3 +316,12 @@ resurtidos.on('connection',dashboard=>{
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });
+
+
+// function* iterate(array){
+//     for (let value of array){ yield value; };
+// }
+
+// const it = iterate(["MariJose","Viridiana","Itzel","Lizeth","Liliana","Alexa","Diana","Yadi","Dennis","Sandra","Sarah"]);
+
+// console.log(it.next().value);

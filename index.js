@@ -1,8 +1,8 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
     'http://localhost:2100',
-    'http://192.168.10.15:7007',
-    'http://192.168.10.15:6699',
+    'http://192.168.10.189:7007',
+    'http://192.168.10.189:6699',
     'http://192.168.12.183:2100',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006'

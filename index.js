@@ -1,13 +1,9 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
-    'http://localhost:2100',
-    'http://localhost:2200',// para que se conecte al restock
-    'http://192.168.10.189:2200',
-    'http://192.168.10.189:7007',
-    'http://192.168.10.189:6699',
-    'http://192.168.12.183:2100',
-    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
-    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006'
+    'http://localhost:8080',
+    '192.168.10.57:8080',
+    // 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
+    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4004'
 ];
 
 console.log("Reiniciado...");

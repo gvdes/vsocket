@@ -1,7 +1,7 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
     'http://localhost:8080',
-    '192.168.10.57:8080',
+    'http://192.168.10.57:8080',
     // 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4004'
 ];

@@ -1,6 +1,7 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
     'http://localhost:2100',
+    'http://localhost:9000',
     'http://localhost:2200',// para que se conecte al restock
     'http://192.168.10.112:2200',// para que se conecte al restock
     'http://192.168.10.112:9000',// para que se conecte al restock
@@ -320,6 +321,15 @@ resurtidos.on('connection',dashboard=>{
         console.log('Saliendo de los rooms resurtidos...');
         dashboard.disconnect();
     });
+
+    dashboard.on('changeStatusRequisition', chst => {
+        console.log(chst)
+        resurtidos.emit('changeStatusRequisition',chst)
+    })
+    dashboard.on('changeStatusPartition', chst => {
+        console.log(chst)
+        resurtidos.emit('changeStatusPartition',chst)
+    })
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });

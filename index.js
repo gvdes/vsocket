@@ -324,6 +324,16 @@ resurtidos.on('connection',dashboard=>{
         resurtidos.to(roomdash).emit('order_refresh',gdata);
     });
 
+    // orderpartition_refresh
+
+    dashboard.on('orderpartition_refresh',gdata=>{
+        console.log("refrescando pedido...");
+        let roomdash = `DASHBOARDSREQS`;
+        // // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
+
+        resurtidos.to(roomdash).emit('orderpartition_refresh',gdata);
+    });
+
     dashboard.on('leave',(gdata)=>{
         // console.log(gdata);
         console.log('Saliendo de los rooms resurtidos...');

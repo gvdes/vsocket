@@ -316,20 +316,28 @@ resurtidos.on('connection',dashboard=>{
         resurtidos.to(roomdash).emit('order_changestate',gdata);
     });
 
+    dashboard.on('order_refresh',gdata=>{
+        console.log("refrescando pedido...");
+        let roomdash = `DASHBOARDSREQS`;
+        // // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
+
+        resurtidos.to(roomdash).emit('order_refresh',gdata);
+    });
+
     dashboard.on('leave',(gdata)=>{
         // console.log(gdata);
         console.log('Saliendo de los rooms resurtidos...');
         dashboard.disconnect();
     });
 
-    dashboard.on('changeStatusRequisition', chst => {
-        console.log(chst)
-        resurtidos.emit('changeStatusRequisition',chst)
-    })
-    dashboard.on('changeStatusPartition', chst => {
-        console.log(chst)
-        resurtidos.emit('changeStatusPartition',chst)
-    })
+    // dashboard.on('changeStatusRequisition', chst => {
+    //     console.log(chst)
+    //     resurtidos.emit('changeStatusRequisition',chst)
+    // })
+    // dashboard.on('changeStatusPartition', chst => {
+    //     console.log(chst)
+    //     resurtidos.emit('changeStatusPartition',chst)
+    // })
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });

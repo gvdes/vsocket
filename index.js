@@ -1,12 +1,18 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
     'http://localhost:2100',
+    'http://localhost:9000',
     'http://localhost:2200',// para que se conecte al restock
+    'http://192.168.10.112:2200',// para que se conecte al restock
+    'http://192.168.10.112:9000',// para que se conecte al restock
+
     'http://192.168.10.189:2200',
     'http://192.168.10.112:9000',
 
     'http://192.168.10.189:7007',
     'http://192.168.10.189:6699',
+    'http://192.168.10.238:2314',
+    'http://192.168.10.238:1308',
     'http://192.168.12.183:2100',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006'
@@ -312,11 +318,38 @@ resurtidos.on('connection',dashboard=>{
         resurtidos.to(roomdash).emit('order_changestate',gdata);
     });
 
+    dashboard.on('order_refresh',gdata=>{
+        console.log("refrescando pedido...");
+        let roomdash = `DASHBOARDSREQS`;
+        // // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
+
+        resurtidos.to(roomdash).emit('order_refresh',gdata);
+    });
+
+    // orderpartition_refresh
+
+    dashboard.on('orderpartition_refresh',gdata=>{
+        console.log("refrescando pedido...");
+        let roomdash = `DASHBOARDSREQS`;
+        // // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
+
+        resurtidos.to(roomdash).emit('orderpartition_refresh',gdata);
+    });
+
     dashboard.on('leave',(gdata)=>{
         // console.log(gdata);
         console.log('Saliendo de los rooms resurtidos...');
         dashboard.disconnect();
     });
+
+    // dashboard.on('changeStatusRequisition', chst => {
+    //     console.log(chst)
+    //     resurtidos.emit('changeStatusRequisition',chst)
+    // })
+    // dashboard.on('changeStatusPartition', chst => {
+    //     console.log(chst)
+    //     resurtidos.emit('changeStatusPartition',chst)
+    // })
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });

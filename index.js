@@ -3,11 +3,15 @@ const allowedSites = [
     'http://localhost:2100',
     'http://localhost:9000',
     'http://localhost:2200',// para que se conecte al restock
+    'http://localhost:8080',// para que se conecte al restock
+    // 'http://localhost:2200',// para que se conecte al restock
+
     'http://192.168.10.112:2200',// para que se conecte al restock
     'http://192.168.10.112:9000',// para que se conecte al restock
 
     'http://192.168.10.189:2200',
     'http://192.168.10.112:9000',
+    'http://192.168.10.112:8080',
 
     'http://192.168.10.189:7007',
     'http://192.168.10.189:6699',

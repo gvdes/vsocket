@@ -9,9 +9,11 @@ const allowedSites = [
     'http://192.168.10.112:2200',// para que se conecte al restock
     'http://192.168.10.112:9000',// para que se conecte al restock
 
+
     'http://192.168.10.189:2200',
-    'http://192.168.10.112:9000',
     'http://192.168.10.112:8080',
+
+    'http://192.168.30.253:1619',
 
     'http://192.168.10.189:7007',
     'http://192.168.10.189:6699',

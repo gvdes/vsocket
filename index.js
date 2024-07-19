@@ -2,6 +2,8 @@
 const allowedSites = [
     'http://localhost:8080',
     'http://192.168.10.57:8080',
+    'http://10.20.10.21:8080',
+
     // 'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4004'
 ];

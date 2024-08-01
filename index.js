@@ -21,7 +21,8 @@ const allowedSites = [
     'http://192.168.10.238:1308',
     'http://192.168.12.183:2100',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
-    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006'
+    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006',
+    'http://vizuru-cedis-cjvmhnwzgk.dynamic-m.com:8080'
 ];
 
 console.log("Reiniciado...");

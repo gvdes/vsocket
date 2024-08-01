@@ -1,6 +1,6 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
-    'http://vizuru-cedis-cjvmhnwzgk.dynamic-m.com:8080',
+    'http://vizuru-cedis-cjvmhnwzgk.dynamic-m.com:7007',
     'http://10.20.10.21:8080'
 ];
 

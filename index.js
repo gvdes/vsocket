@@ -1,28 +1,7 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
-    'http://localhost:2100',
-    'http://localhost:9000',
-    'http://localhost:2200',// para que se conecte al restock
-    'http://localhost:8080',// para que se conecte al restock
-    // 'http://localhost:2200',// para que se conecte al restock
-
-    'http://192.168.10.112:2200',// para que se conecte al restock
-    'http://192.168.10.112:9000',// para que se conecte al restock
-
-
-    'http://192.168.10.189:2200',
-    'http://192.168.10.112:8080',
-
-    'http://192.168.30.253:1619',
-
-    'http://192.168.10.189:7007',
-    'http://192.168.10.189:6699',
-    'http://192.168.10.238:2314',
-    'http://192.168.10.238:1308',
-    'http://192.168.12.183:2100',
-    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
-    'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006',
-    'http://vizuru-cedis-cjvmhnwzgk.dynamic-m.com:8080'
+    'http://vizuru-cedis-cjvmhnwzgk.dynamic-m.com:8080',
+    'http://10.20.10.21:8080'
 ];
 
 console.log("Reiniciado...");

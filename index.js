@@ -26,6 +26,9 @@ const clients = [];
 let time = time => `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
 io.on('connection', socket =>{
+    const clientIP = socket.handshake.address;
+    console.log(`Nueva conexión desde IP: ${clientIP}`);
+
     console.log("\n\n\n ===================================================================================== ");
     console.log(` === ❰❰❰❰❰ [${time(new Date())}] ${socket.id} has been connected in GSOCKET!!! ❯❯❯❯❯ ===`);
     console.log(" ===================================================================================== \n\n\n");

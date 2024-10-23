@@ -367,13 +367,13 @@ resurtidos.on('connection',dashboard=>{
 
     })
     dashboard.on('blockButton',(param) => {
-        let room  = `${param._workpoint_to}-${param._workpoint_from}`
+        let room  = `${param._workpoint_to}`
         console.log(room)
         resurtidos.to(room).emit('blockButton');
         
       })
       dashboard.on('unblockButton',(param) => {
-        let room  = `${param._workpoint_to}-${param._workpoint_from}`
+        let room  = `${param._workpoint_to}`
         console.log(room)
         resurtidos.to(room).emit('unblockButton');
         

@@ -7,7 +7,7 @@ const allowedSites = [
     // 'http://localhost:2200',// para que se conecte al restock
 
     'http://192.168.10.112:2200',// para que se conecte al restock
-    'http://192.168.10.112:9000',// para que se conecte al restock
+    'http://192.168.10.160:9000',// para que se conecte al restock
 
 
     'http://192.168.10.189:2200',
@@ -356,6 +356,29 @@ resurtidos.on('connection',dashboard=>{
     //     console.log(chst)
     //     resurtidos.emit('changeStatusPartition',chst)
     // })
+
+    dashboard.on('checkouConect',(params)=> {
+        let origen = params._workpoint_to;
+        let destino = params._workpoint_from;
+        let requisision = params.id
+        let condicion = `${origen}-${destino}` 
+        console.log(condicion)
+        dashboard.join(condicion)
+
+    })
+    dashboard.on('blockButton',(param) => {
+        let room  = `${param._workpoint_to}-${param._workpoint_from}`
+        console.log(room)
+        resurtidos.to(room).emit('blockButton');
+        
+      })
+      dashboard.on('unblockButton',(param) => {
+        let room  = `${param._workpoint_to}-${param._workpoint_from}`
+        console.log(room)
+        resurtidos.to(room).emit('unblockButton');
+        
+      })
+
 
     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
 });

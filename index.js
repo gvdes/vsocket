@@ -361,7 +361,7 @@ resurtidos.on('connection',dashboard=>{
         let origen = params._workpoint_to;
         let destino = params._workpoint_from;
         let requisision = params.id
-        let condicion = `${origen}-${destino}` 
+        let condicion = `${origen}` 
         console.log(condicion)
         dashboard.join(condicion)
 

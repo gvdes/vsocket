@@ -1,7 +1,10 @@
 // ❰❰❰❰❰ D E S A R R O L L O ❱❱❱❱❱
 const allowedSites = [
     'http://localhost:2100',
+    'http://localhost:7007',
     'http://localhost:9000',
+    'http://localhost:8000',
+
     'http://localhost:2200',// para que se conecte al restock
     'http://localhost:8080',// para que se conecte al restock
     // 'http://localhost:2200',// para que se conecte al restock
@@ -341,6 +344,12 @@ resurtidos.on('connection',dashboard=>{
 
         resurtidos.to(roomdash).emit('orderpartition_refresh',gdata);
     });
+
+    dashboard.on('partitionCreate',gdata=>{
+        console.log("Creando Particion...");
+        let roomdash = `DASHBOARDSREQS`;
+        resurtidos.to(roomdash).emit('sktPartitionCreate',gdata);
+    })
 
     dashboard.on('leave',(gdata)=>{
         // console.log(gdata);

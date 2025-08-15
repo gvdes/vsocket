@@ -8,7 +8,7 @@ const allowedSites = [
     'http://localhost:8080',// para que se conecte al restock
     // 'http://localhost:2200',// para que se conecte al restock
     'http://192.168.10.112:2200',// para que se conecte al restock
-    'http://192.168.10.160:9000',// para que se conecte al restock
+    'http://192.168.10.160:8000',// para que se conecte al restock
     'http://192.168.10.189:2200',
     'http://192.168.10.189:2201',
     'http://192.168.10.112:8080',
@@ -344,6 +344,12 @@ resurtidos.on('connection',dashboard=>{
         console.log("Creando Particion...");
         let roomdash = `DASHBOARDSREQS`;
         resurtidos.to(roomdash).emit('sktPartitionCreate',gdata);
+    })
+
+    dashboard.on('partitionDelete',gdata=>{
+        console.log("Eliminando Particion...");
+        let roomdash = `DASHBOARDSREQS`;
+        resurtidos.to(roomdash).emit('sktPartitionDelete',gdata);
     })
 
     dashboard.on('leave',(gdata)=>{

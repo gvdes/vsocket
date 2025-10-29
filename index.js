@@ -340,6 +340,12 @@ resurtidos.on('connection',dashboard=>{
 
         resurtidos.to(roomdash).emit('orderpartition_refresh',gdata);
     });
+    dashboard.on('ChangeStatus',gdata=>{
+        console.log("Refrescar Estado...");
+        let roomdash = `DASHBOARDSREQS`;
+        // // console.log(`${gdata.profile.me.nick} de ${gdata.profile.workpoint.alias} ha cambiado el status de la orden ${gdata.order.id} a ${gdata.state.id} (${gdata.state.name})`);
+        resurtidos.to(roomdash).emit('ChangeStatus',gdata);
+    });
 
     dashboard.on('partitionCreate',gdata=>{
         console.log("Creando Particion...");

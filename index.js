@@ -38,7 +38,6 @@ const counters = io.of('/counters');
 const preventa = io.of('/preventa');
 const resurtidos = io.of('/resurtidos');
 const clients = [];
-// const resurtido = io.of('/resurtido');
 
 let time = time => `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
@@ -51,13 +50,16 @@ io.on('connection', socket => {
 counters.on('connection', counter => {
     console.log("\n\n\n\n\n=============================================");
     console.log(`[${time(new Date())}]: ❰❰❰❰❰ Nueva conexion a INVENTARIOS ❯❯❯❯❯`);
-
-    counter.on('index', gdata => { console.log(`[${time(new Date())}]: ${gdata.me.names} ${gdata.me.surname_pat} [${gdata.me.nick}] de ${gdata.workpoint.name} [${gdata.workpoint.alias}] ha ingresado al home de Inventarios`); });
+    // console.log(gdata)
+    
+    counter.on('index', gdata => {
+        console.log(`[${time(new Date())}]: ${gdata.credentials.name} ${gdata.credentials.surnames} [${gdata.credentials.nick}] de ${gdata.store.name} [${gdata.store.alias}] ha ingresado al home de Inventarios`); 
+    });
 
     counter.on('joinat', gdata => {
         let room = gdata.room;
         let user = gdata.user;
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
+        let msg = `${user.credentials.name} ${user.credentials.surnames} [${user.credentials.nick}] de ${user.store.name} [${user.store.alias}]`;
         console.log(`Uniendo a sala: ${room}`);
         counter.join(room);
         console.log(`${msg} se ha unido al ROOM: ${room}`);
@@ -70,7 +72,7 @@ counters.on('connection', counter => {
         let product = gdata.product;
         let room = gdata.room;
 
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
+        let msg = `${user.credentials.name} ${user.credentials.surnames} [${user.credentials.nick}] de ${user.store.name} [${user.store.alias}]`;
         console.log(`${msg} esta contando un elemento`);
 
         counter.broadcast.to(room).emit('counting', { by: user, product: product });
@@ -82,7 +84,7 @@ counters.on('connection', counter => {
         let product = gdata.product;
         let room = gdata.room;
 
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
+        let msg = `${user.credentials.name} ${user.credentials.surnames} [${user.credentials.nick}] de ${user.store.name} [${user.store.alias}]`;
         console.log(`${msg} ha cancelado el conteo en el ROOM: ${room}`);
         counter.broadcast.to(room).emit('cancelcounting', { by: user, product: product });
     });
@@ -93,7 +95,7 @@ counters.on('connection', counter => {
         let product = gdata.product;
         let room = gdata.room;
         let settings = gdata.settings;
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
+        let msg = `${user.credentials.name} ${user.credentials.surnames} [${user.credentials.nick}] de ${user.store.name} [${user.store.alias}]`;
         console.log(`${msg} ha confirmado el conteo en el ROOM: ${room}`);
         counter.broadcast.to(room).emit('countingconfirmed', { by: user, product: product, settings: settings });
     });
@@ -101,14 +103,12 @@ counters.on('connection', counter => {
         let user = gdata.by;
         let room = gdata.room;
         let counter = gdata.counter;
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}]`;
+        let msg = `${user.credentials.name} ${user.credentials.surnames} [${user.credentials.nick}] de ${user.store.name} [${user.store.alias}]`;
         console.log(`${msg} ha terminado el conteo ${room}`);
         counters.in(room).emit('endingCounting', { user, counter });
         // counter.broadcast.to(room).emit('endingCounting',{by:user});
     })
 });
-
-// const socketsin = (nmspc,room) => { return io.of("/"+nmspc).in(room).allSockets(); }
 
 preventa.on('connection', socket => {
     console.log(" ================================================================================= ");
@@ -264,18 +264,6 @@ preventa.on('connection', socket => {
     });
 });
 
-// resurtidos.on('connection',socket=>{
-//     console.log("\n\n\n\n\n=============================================");
-//     console.log("❰❰❰❰❰ Nueva conexion a RESURTIDOS ❯❯❯❯❯");
-
-//     /**
-//      * Canal global para WORKPOINTS
-//      * Canal entre CEDIS
-//      */
-
-//     dashboard.on('disconnect',()=>{ console.log("\nun usuario abandono el canal resurtidos\n"); });
-// });
-
 resurtidos.on('connection', dashboard => {
     console.log("\n\n\n\n\n=============================================");
     console.log("❰❰❰❰❰ Nueva conexion a RESURTIDOS ❯❯❯❯❯");
@@ -404,12 +392,3 @@ resurtidos.on('connection', dashboard => {
 
     dashboard.on('disconnect', () => { console.log("\nun usuario abandono el canal resurtidos\n"); });
 });
-
-
-// function* iterate(array){
-//     for (let value of array){ yield value; };
-// }
-
-// const it = iterate(["MariJose","Viridiana","Itzel","Lizeth","Liliana","Alexa","Diana","Yadi","Dennis","Sandra","Sarah"]);
-
-// console.log(it.next().value);

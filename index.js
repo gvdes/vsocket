@@ -120,7 +120,7 @@ preventa.on('connection', socket => {
     socket.on('join', ({ profile, workpoint, room }) => {
 
         try {
-            let user = profile.me.nick;// nombre dle usuairo a conectar
+            let user = profile.credentials.nick;// nombre dle usuairo a conectar
             let branch = workpoint.alias; // nombre de sucursal de conexion de origen
             let _room = `PRV_${branch}_${room}`;// nombre del room a crear
             let _admins = `PRV_${branch}_admins`;// nombre del room a crear
@@ -269,14 +269,14 @@ resurtidos.on('connection', dashboard => {
     console.log("❰❰❰❰❰ Nueva conexion a RESURTIDOS ❯❯❯❯❯");
 
     dashboard.on('joinat', gdata => {
-        console.log(gdata);
+        // console.log(gdata);
         //let roomdash = `DASHREQ-${gdata.room}`;// nombre del room a unirse
         let roomdash = `DASHBOARDSREQS`;// nombre del room a unirse
         console.log("uniendose a room " + roomdash);//
-        let user = gdata.profile;
-        let from = gdata.workpoint;
+        let user = gdata.credentials;
+        let from = gdata.store;
         dashboard.join(roomdash);
-        let msg = `${user.me.names} ${user.me.surname_pat} [${user.me.nick}] de ${user.workpoint.name} [${user.workpoint.alias}] se unio a resurtidos y al room ${roomdash}`;
+        let msg = `${user.name} ${user.surnames} [${user.nick}] de ${from.name} [${from.alias}] se unio a resurtidos y al room ${roomdash}`;
         console.log(msg);
 
         // envia a todos en el room EXCEPTO al emisor

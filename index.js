@@ -19,6 +19,7 @@ const allowedSites = [
     'http://192.168.10.238:1308',
     'http://192.168.12.183:2100',
     'http://192.168.40.214:1619',
+    'http://192.168.100.54:2201',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:4546',
     'http://mx100-cedis-mkrqpwcczk.dynamic-m.com:6006'
 ];
